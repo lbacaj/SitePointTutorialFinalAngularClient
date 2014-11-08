@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-app.controller('ServerTimeController', ['$scope', 'signalRHubProxy',
-    function ServerTimeController($scope, signalRHubProxy) {
-        var clientPushHubProxy = signalRHubProxy(signalRHubProxy.defaultServer, 'performanceHub', { logging: true });
-        var serverTimeHubProxy = signalRHubProxy(signalRHubProxy.defaultServer, 'performanceHub');
+app.controller('ServerTimeController', ['$scope', 'backendHubProxy',
+    function ServerTimeController($scope, backendHubProxy) {
+        var clientPushHubProxy = backendHubProxy(backendHubProxy.defaultServer, 'performanceHub', { logging: true });
+        var serverTimeHubProxy = backendHubProxy(backendHubProxy.defaultServer, 'performanceHub');
 
         clientPushHubProxy.on('serverTime', function (data) {
             $scope.currentServerTime = data;
@@ -18,34 +18,24 @@ app.controller('ServerTimeController', ['$scope', 'signalRHubProxy',
     }
 ]);
 
-/*
-function PerformanceDataController($scope, signalRHubProxy) {
-    var performanceDataHub = signalRHubProxy(signalRHubProxy.defaultServer, 'performanceDataHub');
 
-    performanceDataHub.on('newCpuDataValue', function (data) {
-        $scope.cpuData = data;
-    });
-};
-*/
-
-
-app.controller('PerformanceDataController', ['$scope', 'signalRHubProxy',
-    function ($scope, signalRHubProxy) {
-        var performanceDataHub = signalRHubProxy(signalRHubProxy.defaultServer, 'performanceHub');
+app.controller('PerformanceDataController', ['$scope', 'backendHubProxy',
+    function ($scope, backendHubProxy) {
+        var performanceDataHub = backendHubProxy(backendHubProxy.defaultServer, 'performanceHub');
         var entry = [];
 
         $scope.currentRamNumber = 0;
         $scope.realtimeLine = generateLineData();
         $scope.realtimeBar = generateLineData();
         $scope.realtimeArea = generateLineData();
-        $scope.options = { thickness: 10, mode: "gauge", total: 100 };
+        $scope.options = { thickness: 10, mode: 'gauge', total: 100 };
         $scope.data = [
-            { label: "CPU", value: 78, color: "#d62728", suffix: "%" }
+            { label: 'CPU', value: 78, color: '#d62728', suffix: '%' }
         ];
 
-        $scope.ramGaugeoptions = { thickness: 10, mode: "gauge", total: 100 };
+        $scope.ramGaugeoptions = { thickness: 10, mode: 'gauge', total: 100 };
         $scope.ramGaugeData = [
-            { label: "RAM", value: 68, color: "#1f77b4", suffix: "%" }
+            { label: 'RAM', value: 68, color: '#1f77b4', suffix: '%' }
         ];
         $scope.currentRamNumber = 68;
         //$scope.realtimeLineFeed = entry;
@@ -57,34 +47,34 @@ app.controller('PerformanceDataController', ['$scope', 'signalRHubProxy',
             data.forEach(function (dataItem) {
 
                 switch(dataItem.categoryName) {
-                    case "Processor":
+                    case 'Processor':
                         $scope.cpuData = dataItem.value;
                         chartEntry.push({ time: timestamp, y: dataItem.value });
                         $scope.data = [
-                            { label: "CPU", value: dataItem.value, color: "#d62728", suffix: "%" }
+                            { label: 'CPU', value: dataItem.value, color: '#d62728', suffix: '%' }
                         ];
                         break;
-                    case "Memory":
+                    case 'Memory':
                         $scope.memData = dataItem.value;
                         chartEntry.push({ time: timestamp, y: dataItem.value });
                         $scope.ramGaugeData = [
-                            { label: "RAM", value: dataItem.value, color: "#1f77b4", suffix: "%" }
+                            { label: 'RAM', value: dataItem.value, color: '#1f77b4', suffix: '%' }
                         ];
                         $scope.currentRamNumber = dataItem.value;
                         break;
-                    case "Network In":
+                    case 'Network In':
                         $scope.netInData = dataItem.value.toFixed(2);
                         chartEntry.push({ time: timestamp, y: dataItem.value });
                         break;
-                    case "Network Out":
+                    case 'Network Out':
                         $scope.netOutData = dataItem.value.toFixed(2);
                         chartEntry.push({ time: timestamp, y: dataItem.value });
                         break;
-                    case "Disk Read Bytes/Sec":
+                    case 'Disk Read Bytes/Sec':
                         $scope.diskReaddData = dataItem.value.toFixed(3);
                         chartEntry.push({ time: timestamp, y: dataItem.value });
                         break;
-                    case "Disk Write Bytes/Sec":
+                    case 'Disk Write Bytes/Sec':
                         $scope.diskWriteData = dataItem.value.toFixed(3);
                         chartEntry.push({ time: timestamp, y: dataItem.value });
                         break;

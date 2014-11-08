@@ -1,8 +1,8 @@
 ﻿'use strict';
 
-app.factory('signalRHubProxy', ['$rootScope', 'signalRServer', function ($rootScope, signalRServer) {
-    function signalRHubProxyFactory(serverUrl, hubName, startOptions) {
-        var connection = $.hubConnection(signalRServer);
+app.factory('backendHubProxy', ['$rootScope', 'backendServerUrl', function ($rootScope, backendServerUrl) {
+    function backendHubProxyFactory(serverUrl, hubName, startOptions) {
+        var connection = $.hubConnection(backendServerUrl);
         var proxy = connection.createHubProxy(hubName);
         connection.start(startOptions).done(function () { });
 
@@ -39,5 +39,5 @@ app.factory('signalRHubProxy', ['$rootScope', 'signalRServer', function ($rootSc
         };
     };
 
-    return signalRHubProxyFactory;
+    return backendHubProxyFactory;
 }]);
