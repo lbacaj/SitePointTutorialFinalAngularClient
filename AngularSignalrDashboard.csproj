@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\AngularSignalrDashboardLouieBacaj %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\AngularSignalrDashboardLouieBacaj %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\AngularSignalrDashboardLouieBacaj.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -867,7 +868,6 @@
     <Content Include="Scripts\plugin.js" />
     <Content Include="Scripts\raphael.min.js" />
     <Content Include="Scripts\sb-admin-2.js" />
-    <Content Include="Scripts\smoothie.js" />
     <Content Include="Scripts\velocity.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\version.json" />
